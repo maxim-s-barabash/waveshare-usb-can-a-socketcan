@@ -1,0 +1,15 @@
+[Unit]
+Description=aa55cand bridge for Waveshare USB-CAN-A on /dev/%i
+After=dev-%i.device
+BindsTo=dev-%i.device
+
+[Service]
+Type=simple
+ExecStartPre=-/sbin/ip link add dev vcan0 type vcan
+ExecStartPre=/sbin/ip link set up vcan0
+ExecStart=/usr/local/bin/aa55cand /dev/%i vcan0 0x05
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

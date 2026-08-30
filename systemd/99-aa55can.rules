@@ -1,0 +1,9 @@
+# Waveshare USB-CAN-A: the adapter is a CH340 USB-serial chip (idVendor
+# 1a86, idProduct 7523) with an STM32 behind it. CH340 exposes no serial
+# number, so this rule cannot distinguish this adapter from any other
+# CH340-based USB-serial device (Arduino clones, other dongles, ...) on the
+# same idVendor/idProduct pair — if you have more than one CH340 device
+# plugged in, this will fire for all of them.
+#
+# Starts an aa55cand@<ttyname>.service instance for every matching tty node.
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", TAG+="systemd", ENV{SYSTEMD_WANTS}+="aa55cand@%k.service"
